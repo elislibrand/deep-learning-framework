@@ -11,19 +11,14 @@ class Dense:
         self.weights = np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
         
-        self.activation = activation
+        if activation == 'sigmoid':
+            self.activation = a.sigmoid
+        elif activation == 'relu':
+            self.activation = a.relu
+        elif activation == 'softmax':
+            self.activation = a.softmax
+        else:
+            self.activation = a.linear   
         
     def forward(self, inputs):
-        self.outputs = self.activate(np.dot(inputs, self.weights) + self.biases)
-        
-    def activate(self, z):
-        if self.activation == 'sigmoid':
-            outputs = a.sigmoid(z)
-        elif self.activation == 'relu':
-            outputs = a.relu(z)
-        elif self.activation == 'softmax':
-            outputs = a.softmax(z)
-        else:
-            outputs = z    
-        
-        return outputs
+        self.outputs = self.activation(np.dot(inputs, self.weights) + self.biases)

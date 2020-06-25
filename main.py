@@ -11,4 +11,4 @@ inputs = [[1, 2, 3],
 model = Sequential()
 
 model.add(Dense(n_inputs = 3, n_neurons = 3, activation = 'relu'))
-model.add(Dense(n_inputs = 3, n_neurons = 2, activation = 'softmax'))
+model.add(Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid'))
