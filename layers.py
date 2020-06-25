@@ -14,4 +14,12 @@ class Dense:
         self.activation = activation
         
     def forward(self, inputs):
-        self.outputs = np.dot(inputs, self.weights) + self.biases # Activate z
+        self.outputs = self.activate(np.dot(inputs, self.weights) + self.biases)
+        
+    def activate(self, z):
+        if self.activation == 'sigmoid':
+            outputs = sigmoid(z)
+        else:
+            outputs = z    
+        
+        return outputs

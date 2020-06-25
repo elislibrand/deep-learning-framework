@@ -1,7 +1,7 @@
 import numpy as np
 from layers import Dense
 
-class NeuralNetwork:
+class Sequential:
     def __init__(self):
         self.layers = []
         
