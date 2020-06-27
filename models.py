@@ -21,27 +21,44 @@ class Sequential:
             layer = self.layers[i]
             
             if layer == self.layers[-1]:
-                layer.error = targets - outputs
+                layer.errors = targets - outputs
             else:
                 next_layer = self.layers[i + 1]
                 
-                layer.error = np.dot(next_layer.weights, next_layer.delta.T).T
+                layer.errors = np.dot(next_layer.deltas, next_layer.weights.T)
                 
-            layer.delta = layer.error * layer.derivate(layer.outputs)
+            layer.deltas = layer.errors * layer.derivate(layer.outputs)
             
-            print(layer.delta)
-            print()
-                
+            layer.weights += self.eta * np.dot(layer.inputs.T, layer.deltas)
+            #layer.biases
+                        
+            #self.print_matrices(i)
+            
+    def print_matrices(self, i):
+        print('Layer {}'.format(i))
+        
+        print('Inputs shape: {}'.format(self.layers[i].inputs.shape))
+        print('Weights shape: {}'.format(self.layers[i].weights.shape))
+        print('Biases shape: {}'.format(self.layers[i].biases.shape))
+        print('Errors shape: {}'.format(self.layers[i].errors.shape))
+        print('Derivatives shape: {}'.format(self.layers[i].derivate(self.layers[i].outputs).shape))
+        print('Deltas shape: {}'.format(self.layers[i].deltas.shape))
+        print()
+            
     def predict(self, inputs):
         predictions = self.forward(inputs)
         
         return np.round(predictions)
     
-    def fit(self, inputs, targets, n_epochs: int = 100):
+    def fit(self, inputs, targets, eta: float, n_epochs: int = 100):
         self.inputs = inputs
         self.targets = targets
+        self.eta = eta
         
-        outputs = self.forward(self.inputs)
-        self.backward(self.targets, outputs)
-        
-        #print(self.targets - self.outputs)
+        for i in range(n_epochs):
+            outputs = self.forward(self.inputs)
+            self.backward(self.targets, outputs)
+            
+            if i % 100 == 0:
+                print(self.forward(self.inputs))
+                print()
