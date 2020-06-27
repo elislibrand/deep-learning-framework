@@ -30,8 +30,8 @@ class Sequential:
             layer.deltas = layer.errors * layer.derivate(layer.outputs)
             
             layer.weights += self.eta * np.dot(layer.inputs.T, layer.deltas)
-            #layer.biases
-                        
+            layer.biases += self.eta * np.sum(layer.deltas, axis = 0, keepdims = True)
+            
             #self.print_matrices(i)
             
     def print_matrices(self, i):
@@ -50,7 +50,7 @@ class Sequential:
         
         return np.round(predictions)
     
-    def fit(self, inputs, targets, eta: float, n_epochs: int = 100):
+    def fit(self, inputs, targets, eta: float, n_epochs: int = 10000):
         self.inputs = inputs
         self.targets = targets
         self.eta = eta
@@ -59,6 +59,5 @@ class Sequential:
             outputs = self.forward(self.inputs)
             self.backward(self.targets, outputs)
             
-            if i % 100 == 0:
-                print(self.forward(self.inputs))
-                print()
+            if i % (n_epochs / (n_epochs / 1000)) == 0:
+                print('Epoch {}\n{}\n'.format(i, self.forward(self.inputs)))
