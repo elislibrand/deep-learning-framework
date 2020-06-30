@@ -27,7 +27,7 @@ class Sequential:
                 
                 layer.errors = np.dot(next_layer.deltas, next_layer.weights.T)
                 
-            layer.deltas = layer.errors * layer.derivate(layer.outputs)
+            layer.deltas = layer.errors * layer.differentiate(layer.outputs)
             
             layer.weights += self.eta * np.dot(layer.inputs.T, layer.deltas)
             layer.biases += self.eta * np.sum(layer.deltas, axis = 0, keepdims = True)

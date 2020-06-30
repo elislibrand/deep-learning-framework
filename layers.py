@@ -29,5 +29,5 @@ class Dense:
         
         return self.outputs
     
-    def derivate(self, inputs):
+    def differentiate(self, inputs):
         return self.activation(inputs, derivative = True)
