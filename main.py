@@ -21,4 +21,4 @@ model = Sequential()
 model.add(Dense(n_inputs = 3, n_neurons = 3, activation = 'relu'))
 model.add(Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid'))
 
-model.fit(inputs_norm, targets, eta = 0.05, n_epochs = 50000)
+model.fit(inputs_norm, targets, eta = 0.01, n_epochs = 100000)

@@ -60,4 +60,4 @@ class Sequential:
             self.backward(self.targets, outputs)
             
             if i % (n_epochs / (n_epochs / 1000)) == 0:
-                print('Epoch {}\n{}\n'.format(i, self.forward(self.inputs)))
+                print('Epoch {}\t{}'.format(i, np.round(self.forward(self.inputs).T, decimals = 3)), end = '\n')
