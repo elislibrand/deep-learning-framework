@@ -29,4 +29,5 @@ def get_data():
     
     return inputs_norm, targets
     
-main()
+if __name__ == "__main__":
+    main()
