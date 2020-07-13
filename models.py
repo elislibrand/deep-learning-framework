@@ -25,11 +25,11 @@ class Sequential:
             else:
                 next_layer = self.layers[i + 1]
                 
-                layer.errors = np.dot(next_layer.deltas, next_layer.weights.T)
+                layer.errors = next_layer.deltas @ next_layer.weights.T
                 
             layer.deltas = layer.errors * layer.differentiate(layer.outputs)
             
-            layer.weights += self.eta * np.dot(layer.inputs.T, layer.deltas)
+            layer.weights += self.eta * layer.inputs.T @ layer.deltas
             layer.biases += self.eta * np.sum(layer.deltas, axis = 0, keepdims = True)
             
             #self.print_matrices(i)

@@ -25,7 +25,7 @@ class Dense:
         
     def activate(self, inputs):
         self.inputs = inputs
-        self.outputs = self.activation(np.dot(inputs, self.weights) + self.biases)
+        self.outputs = self.activation(inputs @ self.weights + self.biases)
         
         return self.outputs
     
