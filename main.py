@@ -1,6 +1,6 @@
 import numpy as np
-from models import Sequential
-from layers import Dense
+from neunet.models import Sequential
+from neunet.layers import Dense
 
 def main():
     inputs, targets = get_data()
@@ -30,4 +30,9 @@ def get_data():
     return inputs_norm, targets
     
 if __name__ == "__main__":
+    #if wmi.WMI().Win32_VideoController()[0].AdapterCompatibility.lower() == 'nvidia':
+    #    import cupy as np
+    #else:
+    #    import numpy as np
+
     main()

@@ -1,24 +1,24 @@
 import numpy as np
 
-def linear(z, derivative: bool = False):
+def linear(z, derivative = False):
     if derivative:
         return 1
     
     return z
 
-def sigmoid(z, derivative: bool = False):
+def sigmoid(z, derivative = False):
     if derivative:
         return z * (1 - z)
     
     return 1 / (1 + np.exp(-z))
 
-def relu(z, derivative: bool = False):
+def relu(z, derivative = False):
     if derivative:
-        return np.heaviside(z, 0)
+        return 1 * (z > 0)
     
-    return np.maximum(0, z)
+    return z * (z > 0)
 
-def softmax(z, derivative: bool = False):
+def softmax(z, derivative = False):
     if derivative:
         pass
     

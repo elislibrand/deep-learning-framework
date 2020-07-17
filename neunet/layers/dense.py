@@ -1,10 +1,10 @@
 import numpy as np
-import activations as a
+from neunet import activations as a
 
 np.random.seed(0)
 
 class Dense:
-    def __init__(self, n_inputs: int, n_neurons: int, activation: str = None):
+    def __init__(self, n_inputs, n_neurons, activation = None):
         self.n_inputs = n_inputs
         self.n_neurons = n_neurons
         
@@ -25,7 +25,8 @@ class Dense:
         
     def activate(self, inputs):
         self.inputs = inputs
-        self.outputs = self.activation(inputs @ self.weights + self.biases)
+        
+        self.outputs = self.activation(self.inputs @ self.weights + self.biases)
         
         return self.outputs
     

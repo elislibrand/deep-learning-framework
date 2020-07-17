@@ -1,11 +1,10 @@
 import numpy as np
-from layers import Dense
 
 class Sequential:
     def __init__(self):
         self.layers = []
         
-    def add(self, layer: Dense):
+    def add(self, layer):
         self.layers.append(layer)
         
     def forward(self, inputs):
@@ -50,7 +49,7 @@ class Sequential:
         
         return np.round(predictions)
     
-    def fit(self, inputs, targets, eta: float, n_epochs: int = 10000):
+    def fit(self, inputs, targets, eta, n_epochs = 10000):
         self.inputs = inputs
         self.targets = targets
         self.eta = eta
@@ -60,4 +59,4 @@ class Sequential:
             self.backward(self.targets, outputs)
             
             if i % (n_epochs / (n_epochs / 1000)) == 0:
-                print('Epoch {}\t{}'.format(i, np.round(self.forward(self.inputs).T, decimals = 3)), end = '\n')
+                print('Epoch {}\t{}'.format(i, np.around(self.forward(self.inputs).T, decimals = 3)), end = '\n')
