@@ -1,5 +1,5 @@
 import numpy as np
-from neunet import activations as a
+from neunet import activations
 
 np.random.seed(0)
 
@@ -11,17 +11,7 @@ class Dense:
         self.weights = np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
         
-        self.init_activation(activation)
-
-    def init_activation(self, activation):
-        if activation == 'sigmoid':
-            self.activation = a.sigmoid
-        elif activation == 'relu':
-            self.activation = a.relu
-        elif activation == 'softmax':
-            self.activation = a.softmax
-        else:
-            self.activation = a.linear
+        self.activation = activations.get(activation)
         
     def activate(self, inputs):
         self.inputs = inputs

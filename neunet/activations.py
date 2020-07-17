@@ -23,3 +23,13 @@ def softmax(z, derivative = False):
         pass
     
     return np.exp(z - np.max(z)) / np.sum(np.exp(z - np.max(z)))
+
+def get(activation):
+    if activation == 'sigmoid':
+        return sigmoid
+    elif activation == 'relu':
+        return relu
+    elif activation == 'softmax':
+        return softmax
+    else:
+        return linear
