@@ -2,16 +2,6 @@ import numpy as np
 from neunet.models import Sequential
 from neunet.layers import Dense
 
-def main():
-    inputs, targets = get_data()
-    
-    model = Sequential()
-
-    model.add(Dense(n_inputs = 3, n_neurons = 3, activation = 'relu'))
-    model.add(Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid'))
-
-    model.fit(inputs, targets, eta = 0.01, n_epochs = 100000)
-    
 def get_data():
     inputs = np.array([[0, 0, 0],
                        [255, 255, 255],
@@ -28,6 +18,16 @@ def get_data():
                         [0]])
     
     return inputs_norm, targets
+
+def main():
+    inputs, targets = get_data()
+    
+    model = Sequential([
+        Dense(n_inputs = 3, n_neurons = 3, activation = 'relu'),
+        Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid')
+    ])
+
+    model.fit(inputs, targets, eta = 0.01, n_epochs = 100000)
     
 if __name__ == "__main__":
     #if wmi.WMI().Win32_VideoController()[0].AdapterCompatibility.lower() == 'nvidia':
