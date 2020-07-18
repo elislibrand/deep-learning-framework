@@ -1,5 +1,5 @@
 import numpy as np
-from neunet import activations
+from framework import activations
 
 np.random.seed(0)
 

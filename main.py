@@ -1,6 +1,7 @@
 import numpy as np
-from neunet.models import Sequential
-from neunet.layers import Dense
+from framework.models import Sequential
+from framework.layers import Dense
+from framework.optimizers import SGD
 
 def get_data():
     inputs = np.array([[0, 0, 0],
