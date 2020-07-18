@@ -28,8 +28,8 @@ def main():
         Dense(n_inputs = 3, n_neurons = 3, activation = 'relu', regularizers = [L2(1e-4)]),
         Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid', regularizers = [L2(1e-4)])
     ])
-
-    model.fit(inputs, targets, eta = 0.01, n_epochs = 100000)
+    
+    model.fit(inputs, targets, eta = 1e-2, n_epochs = 100000)
     
 if __name__ == "__main__":
     #if wmi.WMI().Win32_VideoController()[0].AdapterCompatibility.lower() == 'nvidia':
