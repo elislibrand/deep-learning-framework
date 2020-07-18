@@ -25,7 +25,7 @@ def main():
     inputs, targets = get_data()
     
     model = Sequential([
-        Dense(n_inputs = 3, n_neurons = 3, activation = 'relu'),
+        Dense(n_inputs = 3, n_neurons = 3, activation = 'relu', regularizers = [L2(1e-4)]),
         Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid', regularizers = [L2(1e-4)])
     ])
 
