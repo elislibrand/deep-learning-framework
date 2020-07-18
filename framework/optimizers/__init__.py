@@ -1,1 +1,1 @@
-from neunet.optimizers.sgd import SGD
+from framework.optimizers.sgd import SGD

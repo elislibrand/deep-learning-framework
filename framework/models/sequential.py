@@ -31,32 +31,19 @@ class Sequential:
             layer.weights += self.eta * layer.inputs.T @ layer.deltas
             layer.biases += self.eta * np.sum(layer.deltas, axis = 0, keepdims = True)
             
-            #self.print_matrices(i)
-            
-    def print_matrices(self, i):
-        print('Layer {}'.format(i))
-        
-        print('Inputs shape: {}'.format(self.layers[i].inputs.shape))
-        print('Weights shape: {}'.format(self.layers[i].weights.shape))
-        print('Biases shape: {}'.format(self.layers[i].biases.shape))
-        print('Errors shape: {}'.format(self.layers[i].errors.shape))
-        print('Derivatives shape: {}'.format(self.layers[i].derivate(self.layers[i].outputs).shape))
-        print('Deltas shape: {}'.format(self.layers[i].deltas.shape))
-        print()
+            layer.regularize(self.eta)
             
     def predict(self, inputs):
         predictions = self.forward(inputs)
         
-        return np.round(predictions)
+        return np.around(predictions)
     
-    def fit(self, inputs, targets, eta, n_epochs = 10000):
-        self.inputs = inputs
-        self.targets = targets
+    def fit(self, inputs, targets, eta, n_epochs):
         self.eta = eta
         
         for i in range(n_epochs):
-            outputs = self.forward(self.inputs)
-            self.backward(self.targets, outputs)
+            outputs = self.forward(inputs)
+            self.backward(targets, outputs)
             
             if i % (n_epochs / (n_epochs / 1000)) == 0:
-                print('Epoch {}\t{}'.format(i, np.around(self.forward(self.inputs).T, decimals = 3)), end = '\n')
+                print('Epoch {}\t{}'.format(i, np.around(self.forward(inputs).T, decimals = 3)), end = '\n')

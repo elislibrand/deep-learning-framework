@@ -1,1 +1,1 @@
-from neunet.models.sequential import Sequential
+from framework.models.sequential import Sequential

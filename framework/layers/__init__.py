@@ -1,1 +1,1 @@
-from neunet.layers.dense import Dense
+from framework.layers.dense import Dense

@@ -2,6 +2,7 @@ import numpy as np
 from framework.models import Sequential
 from framework.layers import Dense
 from framework.optimizers import SGD
+from framework.regularizers import L2
 
 def get_data():
     inputs = np.array([[0, 0, 0],
@@ -25,7 +26,7 @@ def main():
     
     model = Sequential([
         Dense(n_inputs = 3, n_neurons = 3, activation = 'relu'),
-        Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid')
+        Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid', regularizers = [L2(1e-4)])
     ])
 
     model.fit(inputs, targets, eta = 0.01, n_epochs = 100000)
