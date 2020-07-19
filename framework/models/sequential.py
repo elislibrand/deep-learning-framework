@@ -82,4 +82,4 @@ class Sequential:
                 outputs_batch = self.forward(inputs_batch)
                 self.backward(targets_batch, outputs_batch)
 
-            print('Epoch {}\t{}'.format(i, np.around(self.forward(original_inputs).T, decimals = 3)), end = '\n')
+            print('Epoch {}\t{}'.format((i + 1), self.predict(original_inputs).T), end = '\n')
