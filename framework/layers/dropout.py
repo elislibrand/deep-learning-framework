@@ -6,6 +6,9 @@ class Dropout:
 
         self.rate = rate
         
+    def build(self, n_inputs):
+        self.n_inputs = n_inputs
+        
     def activate(self, inputs):
         self.inputs = inputs
         
@@ -18,9 +21,3 @@ class Dropout:
         self.outputs[:, np.logical_not(self.mask)] *= 1 / (1 - self.rate)
         
         return self.outputs
-    
-    def differentiate(self, inputs):
-        pass
-    
-    def regularize(self, eta):
-        pass

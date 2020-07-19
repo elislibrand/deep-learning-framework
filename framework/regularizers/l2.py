@@ -1,13 +1,9 @@
 import numpy as np
+from framework.regularizers import Regularizer
 
-class L2:
+class L2(Regularizer):
     def __init__(self, amount = 1e-2):
         self.amount = amount
         
-    def update(self, weights, eta):
-        values = np.array(weights)
-        delta = self.amount * eta
-        
-        values -= 2 * delta * values
-        
-        return values
+    def update_gradients(self, layer):
+        layer.gradients -= 2 * layer.weights * self.amount

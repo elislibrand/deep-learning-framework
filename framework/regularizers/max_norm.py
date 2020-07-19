@@ -1,13 +1,10 @@
 import numpy as np
+from framework.regularizers import Regularizer
 
-class MaxNorm:
+class MaxNorm(Regularizer):
     def __init__(self, limit = 2):
         self.limit = limit
         
-    def update(self, weights, eta):
-        values = np.array(weights)
-        
-        values[np.where(values > self.limit)] = self.limit
-        values[np.where(values < -self.limit)] = -self.limit
-        
-        return values
+    def update_weights(self, layer):
+        layer.weights = np.minimum(self.limit, layer.weights)
+        layer.weights = np.maximum(-self.limit, layer.weights)
