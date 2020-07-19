@@ -10,7 +10,7 @@ def get_data():
                        [255, 255, 0],
                        [0, 0, 255],
                        [0, 255, 0]])
-
+    
     inputs_norm = (inputs / 255)
 
     targets = np.array([[1],
