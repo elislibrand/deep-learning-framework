@@ -4,15 +4,33 @@ class Sequential:
     def __init__(self, layers = []):
         self.layers = layers
         
+        self.is_built = False
+        
     def add(self, layer):
         self.layers.append(layer)
+        
+    def build(self, n_inputs):
+        if self.is_built:
+            return
+        
+        for i in range(len(self.layers)):
+            layer = self.layers[i]
+            
+            if layer == self.layers[0]:
+                layer.build(n_inputs = n_inputs)
+            else:
+                previous_layer = self.layers[i - 1]
+                
+                layer.build(n_inputs = previous_layer.n_neurons)
+                
+        self.is_built = True
         
     def forward(self, inputs):
         X = inputs
         
         for layer in self.layers:
             X = layer.activate(X)
-            
+
         return X
     
     def backward(self, targets, outputs):
@@ -40,6 +58,8 @@ class Sequential:
     
     def fit(self, inputs, targets, eta, n_epochs):
         self.eta = eta
+
+        self.build(inputs.shape[1])
         
         for i in range(n_epochs):
             outputs = self.forward(inputs)

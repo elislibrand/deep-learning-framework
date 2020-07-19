@@ -10,7 +10,7 @@ def get_data():
                        [255, 255, 0],
                        [0, 0, 255],
                        [0, 255, 0]])
-    
+
     inputs_norm = (inputs / 255)
 
     targets = np.array([[1],
@@ -25,10 +25,10 @@ def main():
     inputs, targets = get_data()
     
     model = Sequential([
-        Dense(n_inputs = 3, n_neurons = 3, activation = 'relu', regularizers = [L2(1e-4)]),
-        Dense(n_inputs = 3, n_neurons = 1, activation = 'sigmoid', regularizers = [L2(1e-4)])
+        Dense(3, activation = 'relu', regularizers = [L2(1e-4)]),
+        Dense(1, activation = 'sigmoid', regularizers = [L2(1e-4)])
     ])
-    
+        
     model.fit(inputs, targets, eta = 1e-2, n_epochs = 100000)
     
 if __name__ == "__main__":
