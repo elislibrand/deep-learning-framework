@@ -1,6 +1,8 @@
 import numpy as np
 from framework import activations
 
+np.random.seed(0)
+
 class Dense:
     def __init__(self, n_neurons, activation = None, regularizers = []):
         self.n_neurons = n_neurons
@@ -12,7 +14,7 @@ class Dense:
     def build(self, n_inputs, seed):
         self.n_inputs = n_inputs
         
-        np.random.seed(seed)
+        #np.random.seed(seed)
         
         self.weights = np.random.randn(self.n_inputs, self.n_neurons)
         self.biases = np.zeros((1, self.n_neurons))

@@ -1,4 +1,5 @@
 import numpy as np
+from framework.optimizers import SGD
 
 class Sequential:
     def __init__(self, layers = []):
@@ -52,8 +53,7 @@ class Sequential:
             
             layer.regularize_gradients()
             
-            layer.weights += self.learning_rate * layer.gradients
-            layer.biases += self.learning_rate * np.sum(layer.deltas, axis = 0, keepdims = True)
+            self.optimizer.update(layer)
             
             layer.regularize_weights()
             
@@ -62,12 +62,24 @@ class Sequential:
         
         return np.around(predictions)
     
-    def fit(self, inputs, targets, batch_size, n_epochs, seed = None):
+    def shuffle(self, inputs, targets):
+        indices = np.random.permutation(len(targets))
+        
+        return inputs[indices], targets[indices]
+    
+    def fit(self, inputs, targets, batch_size, n_epochs, shuffle = True, seed = None):
         self.build(inputs.shape[1], seed)
         
+        original_inputs = np.array(inputs)
+                
         for i in range(n_epochs):
-            outputs = self.forward(inputs)
-            self.backward(targets, outputs)
+            if shuffle:
+                inputs, targets = self.shuffle(inputs, targets)
             
-            if i % (n_epochs / (n_epochs / 1000)) == 0:
-                print('Epoch {}\t{}'.format(i, np.around(self.forward(inputs).T, decimals = 3)), end = '\n')
+            for j in range(0, len(targets), batch_size):
+                inputs_batch, targets_batch = inputs[j:j + batch_size], targets[j:j + batch_size]
+
+                outputs_batch = self.forward(inputs_batch)
+                self.backward(targets_batch, outputs_batch)
+
+            print('Epoch {}\t{}'.format(i, np.around(self.forward(original_inputs).T, decimals = 3)), end = '\n')
