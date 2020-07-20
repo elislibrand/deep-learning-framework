@@ -18,9 +18,9 @@ def main():
         Dense(1, activation = 'sigmoid', regularizers = [L1(amount = 1e-4)])
     ])
     
-    model.compile(optimizer = SGD(learning_rate = 1e-2))
+    model.compile(optimizer = SGD(learning_rate = 0.01, momentum = 0.9))
     
-    model.fit(inputs, targets, batch_size = 4, n_epochs = 500)
+    model.fit(inputs, targets, batch_size = 4, n_epochs = 100)
     
 if __name__ == "__main__":
     #if wmi.WMI().Win32_VideoController()[0].AdapterCompatibility.lower() == 'nvidia':

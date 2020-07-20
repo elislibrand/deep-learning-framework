@@ -18,7 +18,10 @@ class Dense:
         
         self.weights = np.random.randn(self.n_inputs, self.n_neurons)
         self.biases = np.zeros((1, self.n_neurons))
-    
+
+        self.previous_adjustment_weights = np.zeros(self.weights.shape)
+        self.previous_adjustment_biases = np.zeros(self.biases.shape)
+        
     def activate(self, inputs):
         self.inputs = inputs
         
