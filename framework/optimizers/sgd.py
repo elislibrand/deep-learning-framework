@@ -6,7 +6,7 @@ class SGD:
         
         self.momentum = momentum
         
-    def update(self, layer):
+    def optimize(self, layer):
         momentum_weights = self.momentum * layer.previous_adjustment_weights
         momentum_biases = self.momentum * layer.previous_adjustment_biases
         

@@ -3,7 +3,8 @@ from framework.datasets import rgb
 from framework.models import Sequential
 from framework.layers import Dense
 from framework.optimizers import SGD
-from framework.regularizers import L1, L2, MaxNorm
+from framework.initializers import Glorot
+from framework.regularizers import L1, L2
 
 def get_data():
     return rgb.get_normalized()
@@ -13,9 +14,9 @@ def main():
     
     # 3-3-3-1 (classifier)
     model = Sequential([
-        Dense(3, activation = 'relu', regularizers = [L1(amount = 1e-4)]),
-        Dense(3, activation = 'relu', regularizers = [L1(amount = 1e-4)]),
-        Dense(1, activation = 'sigmoid', regularizers = [L1(amount = 1e-4)])
+        Dense(3, activation = 'relu', initializer = Glorot(), regularizers = [L1(amount = 1e-4)]),
+        Dense(3, activation = 'relu', initializer = Glorot(), regularizers = [L1(amount = 1e-4)]),
+        Dense(1, activation = 'sigmoid', initializer = Glorot(), regularizers = [L1(amount = 1e-4)])
     ])
     
     model.compile(optimizer = SGD(learning_rate = 0.01, momentum = 0.9))

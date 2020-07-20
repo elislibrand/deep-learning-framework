@@ -26,7 +26,7 @@ class Sequential:
                 
         self.is_built = True
         
-    def compile(self, optimizer):
+    def compile(self, optimizer = SGD()):
         self.optimizer = optimizer
         
     def forward(self, inputs):
@@ -53,7 +53,7 @@ class Sequential:
             
             layer.regularize_gradients()
             
-            self.optimizer.update(layer)
+            self.optimizer.optimize(layer)
             
             layer.regularize_weights()
             
@@ -62,7 +62,8 @@ class Sequential:
         
         return np.around(predictions)
     
-    def shuffle(self, inputs, targets):
+    @staticmethod
+    def shuffle(inputs, targets):
         indices = np.random.permutation(len(targets))
         
         return inputs[indices], targets[indices]

@@ -1,14 +1,16 @@
 import numpy as np
 from framework import activations
+from framework.initializers import Glorot
 
 np.random.seed(0)
 
 class Dense:
-    def __init__(self, n_neurons, activation = None, regularizers = []):
+    def __init__(self, n_neurons, activation = None, initializer = Glorot(), regularizers = []):
         self.n_neurons = n_neurons
         
         self.activation = activations.get(activation)
         
+        self.initializer = initializer
         self.regularizers = regularizers
     
     def build(self, n_inputs, seed):
@@ -16,7 +18,7 @@ class Dense:
         
         #np.random.seed(seed)
         
-        self.weights = np.random.randn(self.n_inputs, self.n_neurons)
+        self.weights = self.initializer.initialize(self.n_inputs, self.n_neurons)
         self.biases = np.zeros((1, self.n_neurons))
 
         self.previous_adjustment_weights = np.zeros(self.weights.shape)
@@ -34,8 +36,8 @@ class Dense:
     
     def regularize_gradients(self):
         for regularizer in self.regularizers:
-            regularizer.update_gradients(self)
+            regularizer.regularize_gradients(self)
             
     def regularize_weights(self):
         for regularizer in self.regularizers:
-            regularizer.update_weights(self)
+            regularizer.regularize_weights(self)
