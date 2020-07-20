@@ -1,1 +1,2 @@
-from framework.initializers.glorot import Glorot
+from framework.initializers.glorot_normal import GlorotNormal
+from framework.initializers.he_uniform import HeUniform

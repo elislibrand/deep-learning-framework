@@ -1,6 +1,6 @@
 import numpy as np
 
-class Glorot:
+class GlorotNormal:
     @staticmethod
     def initialize(n_inputs, n_neurons):        
         return np.random.normal(
