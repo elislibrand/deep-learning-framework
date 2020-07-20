@@ -1,1 +1,1 @@
-### A basic framework, built from scratch in NumPy, for implementation of neural networks
+### A flexible deep learning framework for implementation of neural networks
