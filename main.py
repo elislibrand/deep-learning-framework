@@ -23,6 +23,12 @@ def main():
     
     model.fit(inputs, targets, batch_size = 4, n_epochs = 100)
     
+    # Prediction
+    color = np.array([int(x) for x in input('\nInput: ').split(',')]) / 255
+    prediction = int(np.squeeze(model.predict(color)))
+    
+    print('Output: {} ({})\n'.format(prediction, 'black' if prediction == 0 else 'white'))
+    
 if __name__ == "__main__":
     #if wmi.WMI().Win32_VideoController()[0].AdapterCompatibility.lower() == 'nvidia':
     #    import cupy as np
