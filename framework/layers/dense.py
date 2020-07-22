@@ -5,13 +5,15 @@ from framework.initializers import GlorotNormal
 np.random.seed(0)
 
 class Dense:
-    def __init__(self, n_neurons, activation = Linear(), initializer = GlorotNormal(), regularizers = []):
+    def __init__(self, n_neurons, activation = Linear(), initializer = GlorotNormal(), regularizers = [], constraints = []):
         self.n_neurons = n_neurons
         
         self.activation = activation
         
         self.initializer = initializer
+        
         self.regularizers = regularizers
+        self.constraints = constraints
     
     def build(self, n_inputs, seed):
         self.n_inputs = n_inputs
@@ -34,10 +36,10 @@ class Dense:
     def differentiate(self, inputs):
         return self.activation.differentiate(inputs)
     
-    def regularize_gradients(self):
+    def regularize(self):
         for regularizer in self.regularizers:
-            regularizer.regularize_gradients(self)
+            regularizer.regularize(self)
             
-    def regularize_weights(self):
-        for regularizer in self.regularizers:
-            regularizer.regularize_weights(self)
+    def constrain(self):
+        for constraint in self.constraints:
+            constraint.constrain(self)

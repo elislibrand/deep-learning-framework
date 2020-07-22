@@ -61,11 +61,11 @@ class Sequential:
             layer.deltas = layer.errors * layer.differentiate(layer.outputs)
             layer.gradients = layer.inputs.T @ layer.deltas
             
-            layer.regularize_gradients()
+            layer.regularize()
             
             self.optimizer.optimize(layer)
             
-            layer.regularize_weights()
+            layer.constrain()
     
     def fit(self, inputs, targets, batch_size, n_epochs, shuffle = True, seed = None):
         self.build(inputs.shape[1], seed)

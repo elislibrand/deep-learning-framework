@@ -1,8 +1,8 @@
 import numpy as np
 
-class Regularizer:
+class Constraint:
     def __init__(self):
         pass
     
-    def regularize(self, layer):
+    def constrain(self, layer):
         pass
