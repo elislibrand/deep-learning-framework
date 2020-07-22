@@ -10,6 +10,16 @@ from framework.regularizers import L1, L2
 def get_data():
     return rgb.get_normalized()
 
+def get_color():
+    user_input = input('\nInput:  ')
+    
+    if ',' in user_input:
+        color = np.asarray([int(x) for x in user_input.split(',')])
+    else:
+        color = np.asarray([int(user_input.lstrip('#')[x:x + 2], 16) for x in (0, 2, 4)])
+    
+    return color / 255
+
 def main():
     inputs, targets = get_data()
     
@@ -25,8 +35,7 @@ def main():
     model.fit(inputs, targets, batch_size = 4, n_epochs = 100)
     
     # Prediction
-    color = np.array([int(x) for x in input('\nInput: ').split(',')]) / 255
-    prediction = int(np.squeeze(model.predict(color)))
+    prediction = int(np.squeeze(model.predict(get_color())))
     
     print('Output: {} ({})\n'.format(prediction, 'black' if prediction == 0 else 'white'))
     
