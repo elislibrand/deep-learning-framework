@@ -29,6 +29,16 @@ class Sequential:
     def compile(self, optimizer = SGD()):
         self.optimizer = optimizer
         
+    @staticmethod
+    def shuffle(inputs, targets):
+        indices = np.random.permutation(len(targets))
+        
+        return inputs[indices], targets[indices]
+        
+    @staticmethod
+    def get_accuracy(targets, outputs):
+        return np.mean(targets == np.around(outputs))
+        
     def forward(self, inputs):
         X = inputs
         
@@ -56,17 +66,6 @@ class Sequential:
             self.optimizer.optimize(layer)
             
             layer.regularize_weights()
-            
-    def predict(self, inputs):
-        predictions = self.forward(inputs)
-        
-        return np.around(predictions)
-    
-    @staticmethod
-    def shuffle(inputs, targets):
-        indices = np.random.permutation(len(targets))
-        
-        return inputs[indices], targets[indices]
     
     def fit(self, inputs, targets, batch_size, n_epochs, shuffle = True, seed = None):
         self.build(inputs.shape[1], seed)
@@ -76,11 +75,18 @@ class Sequential:
         for i in range(n_epochs):
             if shuffle:
                 inputs, targets = self.shuffle(inputs, targets)
-            
+
             for j in range(0, len(targets), batch_size):
                 inputs_batch, targets_batch = inputs[j:j + batch_size], targets[j:j + batch_size]
 
                 outputs_batch = self.forward(inputs_batch)
                 self.backward(targets_batch, outputs_batch)
 
-            print('Epoch {}\t{}'.format((i + 1), self.predict(original_inputs).T), end = '\n')
+            print('Epoch {:<{width}}    [accuracy: {:.3f}]'.format((i + 1),
+                                                                np.around(self.get_accuracy(targets, self.forward(inputs)), 3),
+                                                                width = len(str(n_epochs))))
+            
+    def predict(self, inputs):
+        predictions = self.forward(inputs)
+        
+        return np.around(predictions)
