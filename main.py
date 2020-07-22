@@ -8,7 +8,12 @@ from framework.initializers import GlorotNormal, HeUniform
 from framework.regularizers import L1, L2
 
 def get_data():
-    return rgb.get_normalized()
+    inputs, targets = rgb.get_normalized()
+    
+    print('Class [0]: {}\nClass [1]: {}\n'.format(np.around(np.sum(targets == 0) / len(targets), 2),
+                                                  np.around(np.sum(targets == 1) / len(targets), 2)))
+
+    return inputs, targets
 
 def get_color():
     user_input = input('\nInput:  ')
