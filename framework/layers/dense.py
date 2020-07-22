@@ -1,14 +1,14 @@
 import numpy as np
-from framework import activations
+from framework.activations import Linear
 from framework.initializers import GlorotNormal
 
 np.random.seed(0)
 
 class Dense:
-    def __init__(self, n_neurons, activation = None, initializer = GlorotNormal(), regularizers = []):
+    def __init__(self, n_neurons, activation = Linear(), initializer = GlorotNormal(), regularizers = []):
         self.n_neurons = n_neurons
         
-        self.activation = activations.get(activation)
+        self.activation = activation
         
         self.initializer = initializer
         self.regularizers = regularizers
@@ -27,12 +27,12 @@ class Dense:
     def activate(self, inputs):
         self.inputs = inputs
         
-        self.outputs = self.activation(self.inputs @ self.weights + self.biases)
+        self.outputs = self.activation.activate(self.inputs @ self.weights + self.biases)
         
         return self.outputs
     
     def differentiate(self, inputs):
-        return self.activation(inputs, derivative = True)
+        return self.activation.differentiate(inputs)
     
     def regularize_gradients(self):
         for regularizer in self.regularizers:
