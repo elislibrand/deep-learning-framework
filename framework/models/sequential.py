@@ -52,7 +52,7 @@ class Sequential:
             layer = self.layers[i]
             
             if layer == self.layers[-1]:
-                layer.errors = targets - outputs
+                layer.errors = targets - outputs # Change to: outputs - targets
             else:
                 next_layer = self.layers[i + 1]
                 
@@ -69,9 +69,7 @@ class Sequential:
     
     def fit(self, inputs, targets, batch_size, n_epochs, shuffle = True, seed = None):
         self.build(inputs.shape[1], seed)
-        
-        original_inputs = np.array(inputs)
-                
+                        
         for i in range(n_epochs):
             if shuffle:
                 inputs, targets = self.shuffle(inputs, targets)
@@ -81,10 +79,10 @@ class Sequential:
 
                 outputs_batch = self.forward(inputs_batch)
                 self.backward(targets_batch, outputs_batch)
-
+            
             print('Epoch {:<{width}}    [accuracy: {:.3f}]'.format((i + 1),
-                                                                np.around(self.get_accuracy(targets, self.forward(inputs)), 3),
-                                                                width = len(str(n_epochs))))
+                                                                   np.around(self.get_accuracy(targets, self.forward(inputs)), 3),
+                                                                   width = len(str(n_epochs))))
             
     def predict(self, inputs):
         predictions = self.forward(inputs)
