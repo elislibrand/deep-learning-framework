@@ -38,7 +38,7 @@ def main():
     
     model.compile(optimizer = SGD(learning_rate = 0.01, momentum = 0.9))
     
-    model.fit(inputs, targets, batch_size = 8, n_epochs = 100)
+    model.fit(inputs, targets, batch_size = 32, n_epochs = 100)
     
     # Prediction
     prediction = int(np.squeeze(model.predict(get_color())))

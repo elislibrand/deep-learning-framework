@@ -1,11 +1,11 @@
 import numpy as np
 from framework.activations import Linear
-from framework.initializers import GlorotNormal
+from framework.initializers import GlorotUniform
 
 np.random.seed(0)
 
 class Dense:
-    def __init__(self, n_neurons, activation = Linear(), initializer = GlorotNormal(), regularizers = [], constraints = []):
+    def __init__(self, n_neurons, activation = Linear(), initializer = GlorotUniform(), regularizers = [], constraints = []):
         self.n_neurons = n_neurons
         
         self.activation = activation
