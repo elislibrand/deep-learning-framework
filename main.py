@@ -44,7 +44,7 @@ def main():
     prediction = int(np.squeeze(model.predict(get_color())))
     
     print('Output: {} ({})\n'.format(prediction, 'black' if prediction == 0 else 'white'))
-    
+
 if __name__ == "__main__":
     #if wmi.WMI().Win32_VideoController()[0].AdapterCompatibility.lower() == 'nvidia':
     #    import cupy as np
