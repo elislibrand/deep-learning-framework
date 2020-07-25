@@ -39,7 +39,7 @@ def main():
     
     model.compile(optimizer = SGD(learning_rate = 1e-4, momentum = 0.9), loss = BinaryCrossEntropy())
     
-    model.fit(inputs, targets, batch_size = 32, n_epochs = 1)
+    model.fit(inputs, targets, batch_size = 32, n_epochs = 500)
     
     # Prediction
     prediction = int(np.squeeze(model.predict(get_color())))

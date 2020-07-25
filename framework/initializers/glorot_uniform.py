@@ -1,6 +1,7 @@
 import numpy as np
+from framework.initializers import Initializer
 
-class GlorotUniform:
+class GlorotUniform(Initializer):
     @staticmethod
     def initialize(n_inputs, n_neurons):        
         return np.random.uniform(
