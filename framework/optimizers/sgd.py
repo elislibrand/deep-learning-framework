@@ -13,8 +13,8 @@ class SGD:
         adjustment_weights = self.learning_rate * layer.gradients + momentum_weights
         adjustment_biases = self.learning_rate * np.sum(layer.deltas, axis = 0, keepdims = True) + momentum_biases
         
-        layer.weights += adjustment_weights
-        layer.biases += adjustment_biases
+        layer.weights -= adjustment_weights
+        layer.biases -= adjustment_biases
         
         layer.previous_adjustment_weights = adjustment_weights
         layer.previous_adjustment_biases = adjustment_biases

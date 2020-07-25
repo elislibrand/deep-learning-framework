@@ -2,8 +2,9 @@ import numpy as np
 from framework.datasets import rgb
 from framework.models import Sequential
 from framework.layers import Dense
-from framework.activations import ReLU, Sigmoid
 from framework.optimizers import SGD
+from framework.activations import ReLU, Sigmoid
+from framework.losses import BinaryCrossEntropy
 from framework.initializers import GlorotNormal, HeUniform
 from framework.regularizers import L1, L2
 from framework.constraints import MaxNorm
@@ -36,9 +37,9 @@ def main():
         Dense(1, activation = Sigmoid(), initializer = HeUniform(), regularizers = [L1(amount = 1e-4)], constraints = [MaxNorm()])
     ])
     
-    model.compile(optimizer = SGD(learning_rate = 0.01, momentum = 0.9))
+    model.compile(optimizer = SGD(learning_rate = 1e-4, momentum = 0.9), loss = BinaryCrossEntropy())
     
-    model.fit(inputs, targets, batch_size = 32, n_epochs = 100)
+    model.fit(inputs, targets, batch_size = 32, n_epochs = 1)
     
     # Prediction
     prediction = int(np.squeeze(model.predict(get_color())))

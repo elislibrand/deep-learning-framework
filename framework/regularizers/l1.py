@@ -6,4 +6,4 @@ class L1(Regularizer):
         self.amount = amount
         
     def regularize(self, layer):
-        layer.gradients -= np.sign(layer.weights) * self.amount
+        layer.gradients += np.sign(layer.weights) * self.amount

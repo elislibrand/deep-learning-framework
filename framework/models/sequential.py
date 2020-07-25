@@ -26,8 +26,9 @@ class Sequential:
                 
         self.is_built = True
         
-    def compile(self, optimizer = SGD()):
+    def compile(self, optimizer = SGD(), loss = None):
         self.optimizer = optimizer
+        self.loss = loss
         
     @staticmethod
     def shuffle(inputs, targets):
@@ -52,7 +53,7 @@ class Sequential:
             layer = self.layers[i]
             
             if layer == self.layers[-1]:
-                layer.errors = targets - outputs # Change to: outputs - targets
+                layer.errors = self.loss.differentiate(targets, outputs)
             else:
                 next_layer = self.layers[i + 1]
                 
@@ -69,7 +70,7 @@ class Sequential:
     
     def fit(self, inputs, targets, batch_size, n_epochs, shuffle = True, seed = None):
         self.build(inputs.shape[1], seed)
-                        
+        
         for i in range(n_epochs):
             if shuffle:
                 inputs, targets = self.shuffle(inputs, targets)
@@ -80,10 +81,10 @@ class Sequential:
                 outputs_batch = self.forward(inputs_batch)
                 self.backward(targets_batch, outputs_batch)
                         
-            print('Epoch {:<{width}}    [accuracy: {:.3f} - loss: {:.3f}]'.format((i + 1),
-                                                                   np.around(self.get_accuracy(targets, self.forward(inputs)), 3),
-                                                                   np.around(np.mean(-(targets * np.log(self.forward(inputs)) + (1 - targets) * np.log(1 - self.forward(inputs)))), 3),
-                                                                   width = len(str(n_epochs))))
+            print('Epoch {:<{width}}    [accuracy: {:.3f}    loss: {:.3f}]'.format((i + 1),
+                                                                                   np.around(self.get_accuracy(targets, self.forward(inputs)), 3),
+                                                                                   np.around(self.loss.calculate(targets, self.forward(inputs)), 3),
+                                                                                   width = len(str(n_epochs))))
             
     def predict(self, inputs):
         predictions = self.forward(inputs)
