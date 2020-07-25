@@ -81,9 +81,9 @@ class Sequential:
                 outputs_batch = self.forward(inputs_batch)
                 self.backward(targets_batch, outputs_batch)
                         
-            print('Epoch {:<{width}}    [accuracy: {:.3f}    loss: {:.3f}]'.format((i + 1),
-                                                                                   np.around(self.get_accuracy(targets, self.forward(inputs)), 3),
-                                                                                   np.around(self.loss.calculate(targets, self.forward(inputs)), 3),
+            print('Epoch {:<{width}}    [accuracy: {:.4f}    loss: {:.4f}]'.format((i + 1),
+                                                                                   np.around(self.get_accuracy(targets, self.forward(inputs)), 4),
+                                                                                   np.around(self.loss.calculate(targets, self.forward(inputs)), 4),
                                                                                    width = len(str(n_epochs))))
             
     def predict(self, inputs):
