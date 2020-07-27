@@ -4,7 +4,7 @@ from framework.models import Sequential
 from framework.layers import Dense
 from framework.optimizers import SGD
 from framework.activations import ReLU, Sigmoid
-from framework.losses import BinaryCrossEntropy
+from framework.losses import BCE
 from framework.initializers import GlorotNormal, HeUniform
 from framework.regularizers import L1, L2
 from framework.constraints import MaxNorm
@@ -37,14 +37,14 @@ def main():
         Dense(1, activation = Sigmoid(), initializer = HeUniform(), regularizers = [L1(amount = 1e-4)], constraints = [MaxNorm()])
     ])
     
-    model.compile(optimizer = SGD(learning_rate = 1e-4, momentum = 0.9), loss = BinaryCrossEntropy())
+    model.compile(optimizer = SGD(learning_rate = 1e-4, momentum = 0.9), loss = BCE())
     
     model.fit(inputs, targets, batch_size = 32, n_epochs = 500)
     
     # Prediction
     prediction = int(np.squeeze(model.predict(get_color())))
     
-    print('Output: {} ({})\n'.format(prediction, 'black' if prediction == 0 else 'white'))
+    print('Output: {} ({})'.format(prediction, 'black' if prediction == 0 else 'white'))
 
 if __name__ == "__main__":
     #if wmi.WMI().Win32_VideoController()[0].AdapterCompatibility.lower() == 'nvidia':

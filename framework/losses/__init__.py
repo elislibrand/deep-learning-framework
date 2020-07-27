@@ -1,2 +1,3 @@
 from framework.losses.loss import Loss
-from framework.losses.binary_cross_entropy import BinaryCrossEntropy
+from framework.losses.bce import BCE
+from framework.losses.mse import MSE
