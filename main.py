@@ -5,7 +5,7 @@ from framework.layers import Dense
 from framework.optimizers import SGD
 from framework.activations import ReLU, Sigmoid
 from framework.losses import BCE
-from framework.initializers import GlorotNormal, HeUniform
+from framework.initializers import HeUniform
 from framework.regularizers import L1, L2
 from framework.constraints import MaxNorm
 
