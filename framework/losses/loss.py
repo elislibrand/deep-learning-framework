@@ -5,9 +5,9 @@ class Loss:
         pass
     
     @staticmethod
-    def calculate(targets, outputs):
+    def calculate(outputs, targets):
         pass
     
     @staticmethod
-    def differentiate(targets, outputs):
+    def differentiate(outputs, targets):
         pass

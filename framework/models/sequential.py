@@ -37,8 +37,8 @@ class Sequential:
         return inputs[indices], targets[indices]
         
     @staticmethod
-    def get_accuracy(targets, outputs):
-        return np.mean(targets == np.around(outputs))
+    def get_accuracy(outputs, targets):
+        return np.mean(np.around(outputs) == targets)
         
     def forward(self, inputs):
         X = inputs
@@ -48,12 +48,12 @@ class Sequential:
 
         return X
     
-    def backward(self, targets, outputs):
+    def backward(self, outputs, targets):
         for i in reversed(range(len(self.layers))):
             layer = self.layers[i]
             
             if layer == self.layers[-1]:
-                layer.errors = self.loss.differentiate(targets, outputs)
+                layer.errors = self.loss.differentiate(outputs, targets)
             else:
                 next_layer = self.layers[i + 1]
                 
@@ -79,11 +79,11 @@ class Sequential:
                 inputs_batch, targets_batch = inputs[j:j + batch_size], targets[j:j + batch_size]
 
                 outputs_batch = self.forward(inputs_batch)
-                self.backward(targets_batch, outputs_batch)
+                self.backward(outputs_batch, targets_batch)
                         
             print('Epoch {:<{width}}    [accuracy: {:.4f}    loss: {:.4f}]'.format((i + 1),
-                                                                                   np.around(self.get_accuracy(targets, self.forward(inputs)), 4),
-                                                                                   np.around(self.loss.calculate(targets, self.forward(inputs)), 4),
+                                                                                   np.around(self.get_accuracy(self.forward(inputs), targets), 4),
+                                                                                   np.around(self.loss.calculate(self.forward(inputs), targets), 4),
                                                                                    width = len(str(n_epochs))))
             
     def predict(self, inputs):
