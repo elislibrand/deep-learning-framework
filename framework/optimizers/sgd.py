@@ -11,14 +11,16 @@ class SGD(Optimizer):
         
     def optimize(self, layer):
         if not layer in self.previous.keys():
-            self.previous[layer] = {'weights': np.zeros(layer.weights.shape),
-                                    'biases': np.zeros(layer.biases.shape)}
+            self.previous[layer] = {
+                'weights': np.zeros(layer.weights.shape),
+                'biases': np.zeros(layer.biases.shape)
+            }
         
         momentum_weights = self.momentum * self.previous.get(layer)['weights']
         momentum_biases = self.momentum * self.previous.get(layer)['biases']
         
-        adjustment_weights = momentum_weights + self.learning_rate * layer.gradients
-        adjustment_biases = momentum_biases + self.learning_rate * np.sum(layer.deltas, axis = 0, keepdims = True)
+        adjustment_weights = momentum_weights + self.learning_rate * layer.gradients_weights
+        adjustment_biases = momentum_biases + self.learning_rate * layer.gradients_biases
         
         layer.weights -= adjustment_weights
         layer.biases -= adjustment_biases

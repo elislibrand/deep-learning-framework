@@ -6,4 +6,4 @@ class L2(Regularizer):
         self.amount = amount
         
     def regularize(self, layer):
-        layer.gradients += 2 * layer.weights * self.amount
+        layer.gradients_weights += 2 * layer.weights * self.amount

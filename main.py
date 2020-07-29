@@ -2,7 +2,7 @@ import numpy as np
 from framework.datasets import rgb
 from framework.models import Sequential
 from framework.layers import Dense
-from framework.optimizers import SGD
+from framework.optimizers import RMSProp, SGD, Adam
 from framework.activations import ReLU, Sigmoid
 from framework.losses import BCE
 from framework.initializers import HeUniform
@@ -37,7 +37,7 @@ def main():
         Dense(1, activation = Sigmoid(), initializer = HeUniform(), regularizers = [L1(amount = 1e-4)], constraints = [MaxNorm()])
     ])
     
-    model.compile(optimizer = SGD(learning_rate = 1e-4, momentum = 0.9), loss = BCE())
+    model.compile(optimizer = Adam(learning_rate = 1e-3), loss = BCE())
     
     model.fit(inputs, targets, batch_size = 32, n_epochs = 500)
     

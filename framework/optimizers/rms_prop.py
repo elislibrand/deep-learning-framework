@@ -13,19 +13,21 @@ class RMSProp(Optimizer):
         
     def optimize(self, layer):
         if not layer in self.previous.keys():
-            self.previous[layer] = {'weights': np.zeros(layer.weights.shape),
-                                    'biases': np.zeros(layer.biases.shape),
-                                    'rms_weights': np.zeros(layer.weights.shape),
-                                    'rms_biases': np.zeros(layer.biases.shape)}
+            self.previous[layer] = {
+                'weights': np.zeros(layer.weights.shape),
+                'biases': np.zeros(layer.biases.shape),
+                'rms_weights': np.zeros(layer.weights.shape),
+                'rms_biases': np.zeros(layer.biases.shape)
+            }
         
         momentum_weights = self.momentum * self.previous.get(layer)['weights']
         momentum_biases = self.momentum * self.previous.get(layer)['biases']
         
-        rms_weights = self.rho * self.previous.get(layer)['rms_weights'] + (1 - self.rho) * (layer.gradients ** 2)
-        rms_biases = self.rho * self.previous.get(layer)['rms_biases'] + (1 - self.rho) * (np.sum(layer.deltas, axis = 0, keepdims = True) ** 2)
+        rms_weights = self.rho * self.previous.get(layer)['rms_weights'] + (1 - self.rho) * (layer.gradients_weights ** 2)
+        rms_biases = self.rho * self.previous.get(layer)['rms_biases'] + (1 - self.rho) * (layer.gradients_biases ** 2)
         
-        adjustment_weights = momentum_weights + (self.learning_rate * layer.gradients) / np.sqrt(rms_weights + self.epsilon)
-        adjustment_biases = momentum_biases + (self.learning_rate * np.sum(layer.deltas, axis = 0, keepdims = True)) / np.sqrt(rms_biases + self.epsilon)
+        adjustment_weights = momentum_weights + (self.learning_rate * layer.gradients_weights) / ((rms_weights ** 0.5) + self.epsilon)
+        adjustment_biases = momentum_biases + (self.learning_rate * layer.gradients_biases) / ((rms_biases ** 0.5) + self.epsilon)
         
         layer.weights -= adjustment_weights
         layer.biases -= adjustment_biases

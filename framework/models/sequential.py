@@ -60,7 +60,9 @@ class Sequential:
                 layer.errors = next_layer.deltas @ next_layer.weights.T
                 
             layer.deltas = layer.errors * layer.differentiate(layer.outputs)
-            layer.gradients = layer.inputs.T @ layer.deltas
+            
+            layer.gradients_weights = layer.inputs.T @ layer.deltas
+            layer.gradients_biases = np.sum(layer.deltas, axis = 0, keepdims = True)
             
             layer.regularize()
             
