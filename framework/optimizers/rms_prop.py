@@ -2,7 +2,7 @@ import numpy as np
 from framework.optimizers import Optimizer
 
 class RMSProp(Optimizer):
-    def __init__(self, learning_rate = 1e-3, rho = 0.9, epsilon = 1e-10, momentum = 0):
+    def __init__(self, learning_rate = 1e-3, rho = 0.9, epsilon = 1e-8, momentum = 0):
         self.learning_rate = learning_rate
         
         self.rho = rho
@@ -24,11 +24,11 @@ class RMSProp(Optimizer):
         rms_weights = self.rho * self.previous.get(layer)['rms_weights'] + (1 - self.rho) * (layer.gradients ** 2)
         rms_biases = self.rho * self.previous.get(layer)['rms_biases'] + (1 - self.rho) * (np.sum(layer.deltas, axis = 0, keepdims = True) ** 2)
         
-        adjustment_weights = momentum_weights + layer.gradients / np.sqrt(rms_weights + self.epsilon)
-        adjustment_biases = momentum_biases + np.sum(layer.deltas, axis = 0, keepdims = True) / np.sqrt(rms_biases + self.epsilon)
+        adjustment_weights = momentum_weights + (self.learning_rate * layer.gradients) / np.sqrt(rms_weights + self.epsilon)
+        adjustment_biases = momentum_biases + (self.learning_rate * np.sum(layer.deltas, axis = 0, keepdims = True)) / np.sqrt(rms_biases + self.epsilon)
         
-        layer.weights -= self.learning_rate * adjustment_weights
-        layer.biases -= self.learning_rate * adjustment_biases
+        layer.weights -= adjustment_weights
+        layer.biases -= adjustment_biases
         
         self.previous.get(layer)['weights'] = adjustment_weights
         self.previous.get(layer)['biases'] = adjustment_biases
