@@ -1,5 +1,5 @@
 import numpy as np
-from framework.optimizers import SGD
+from framework.optimizers import RMSProp
 
 class Sequential:
     def __init__(self, layers = []):
@@ -26,7 +26,7 @@ class Sequential:
                 
         self.is_built = True
         
-    def compile(self, optimizer = SGD(), loss = None):
+    def compile(self, optimizer = RMSProp(), loss = None):
         self.optimizer = optimizer
         self.loss = loss
         
