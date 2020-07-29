@@ -39,7 +39,7 @@ def main():
     
     model.compile(optimizer = Adam(learning_rate = 1e-3), loss = BCE())
     
-    model.fit(inputs, targets, batch_size = 32, n_epochs = 500)
+    model.fit(inputs, targets, batch_size = 32, n_epochs = 200)
     
     # Prediction
     prediction = int(np.squeeze(model.predict(get_color())))
